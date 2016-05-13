@@ -1,3 +1,6 @@
+threejs github:
+https://github.com/mrdoob/three.js
+
 动画渲染与性能&FPS:
 http://www.infoq.com/cn/articles/javascript-high-performance-animation-and-page-rendering/
 
