@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>exam.4</title>
+    <title>exam.5</title>
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/stats.js"></script>
     <script type="text/javascript" src="/js/jquery-1.9.0.js"></script>
@@ -26,7 +26,7 @@
 
         // 创建一个场景
         var scene = new THREE.Scene();
-
+        var controls;
         // 创建一个相机
 
         // THREE.PerspectiveCamera(fov, aspect, near, far)  fov：视角度数，可以理解为眼睛睁开大小，度数越大，你看到的物体越多，物体越小 aspect：是照相机水平方向和竖直方向长度的比值，一般等于width/height near和far：是相机最近和最远的距离，均为正值，far>>near 
@@ -58,18 +58,34 @@
         scene.add(plane);
 
         // 创建一个立方体
-        var cubeGeometry = new THREE.CubeGeometry(200,200,200,0,0,0);
-        // var cubeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
+        var cubeGeometry = new THREE.CubeGeometry(509,509,509,0,0,0);
 
 
         //给六个面添加不同的材质
         var mats = [];
-        mats.push(new THREE.MeshBasicMaterial({ color: 0x009e60  }));
-        mats.push(new THREE.MeshBasicMaterial({ color: 0x0051ba  }));
-        mats.push(new THREE.MeshBasicMaterial({ color: 0xffd500  }));
-        mats.push(new THREE.MeshBasicMaterial({ color: 0xff5800  }));
-        mats.push(new THREE.MeshBasicMaterial({ color: 0xC41E3A }));
-        mats.push(new THREE.MeshBasicMaterial({ color: 0xffffff  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_r.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_l.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_u.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_d.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_f.jpg' ) }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_b.jpg' )  }));
+
+
+
+        // mats.push(new THREE.MeshBasicMaterial({ color: 0x009e60  }));
+        // // r
+        // mats.push(new THREE.MeshBasicMaterial({ color: 0x0051ba  }));
+        // // l
+        // mats.push(new THREE.MeshBasicMaterial({ color: 0xffd500  }));
+        // // u
+        // mats.push(new THREE.MeshBasicMaterial({ color: 0xff5800  }));
+        // // d
+        // mats.push(new THREE.MeshBasicMaterial({ color: 0xC41E3A }));
+        // // f
+        // mats.push(new THREE.MeshBasicMaterial({ color: 0xffffff }));
+        // // b
+
+
 
         for (var i = 0; i < 6; i++)
            mats[i].side = THREE.BackSide;
@@ -101,31 +117,30 @@
 
         // scene.addLight(pointofLight);
         
-        var stats = initStats();
+        // var stats = initStats();
         var step = 0;
 
         // renders();
-        renderer.render(scene, camera);
+        // renderer.render(scene, camera);
 
         
         function renders() {
-            stats.update();
+            // stats.update();
             // 绕座标轴旋转立方体
             // cube.rotation.x += 0.02;
             // cube.rotation.y += 0.02;
             // cube.rotation.z += 0.02;
 
             //照相机自动旋转
-            step+=0.02;
-            var x =6+4*(Math.sin(step));
-            camera.lookAt(new THREE.Vector3(x,10,0));
-
-
-
+            // step+=0.02;
+            // var x =6+4*(Math.sin(step));
+            // camera.lookAt(new THREE.Vector3(x,10,0));
 
             // 用requestAnimationFrame进行渲染
             requestAnimationFrame(renders);
+            console.info(renderer);
             renderer.render(scene, camera);
+            update();
         }
 
         function initStats() {
@@ -144,6 +159,13 @@
 
             return stats;
         }
+
+        function update()
+        {            
+            controls.update();
+        }
+        
+        renders();
 
     });
 
