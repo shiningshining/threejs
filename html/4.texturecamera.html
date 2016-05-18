@@ -7,7 +7,6 @@
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/stats.js"></script>
     <script type="text/javascript" src="/js/jquery-1.9.0.js"></script>
-    <script src="/js/OrbitControls.js"></script>
     <style>
         body{
             margin: 0;
@@ -40,12 +39,12 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         //创建一个座标轴，红色是X轴，绿色是Y轴，蓝色是Z轴。AxisHelper(size)是座标轴的尺寸
-        var axes = new THREE.AxisHelper( 20 );
+        var axes = new THREE.AxisHelper( 200 );
         scene.add(axes);
 
         // 创建一个平面
-        var planeGeometry = new THREE.PlaneGeometry(60,20,3,10);
-        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
+        var planeGeometry = new THREE.PlaneGeometry(100,100,3,10);
+        var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc, wireframe: true});
         var plane = new THREE.Mesh(planeGeometry,planeMaterial);
 
         // 放置平面
@@ -58,7 +57,7 @@
         scene.add(plane);
 
         // 创建一个立方体
-        var cubeGeometry = new THREE.CubeGeometry(200,200,200,0,0,0);
+        var cubeGeometry = new THREE.CubeGeometry(50,50,50,0,0,0);
         // var cubeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
 
 
@@ -71,8 +70,9 @@
         mats.push(new THREE.MeshBasicMaterial({ color: 0xC41E3A }));
         mats.push(new THREE.MeshBasicMaterial({ color: 0xffffff  }));
 
-        for (var i = 0; i < 6; i++)
-           mats[i].side = THREE.BackSide;
+        // for (var i = 0; i < 6; i++)
+        //    mats[i].side = THREE.BackSide;
+        mats.side=THREE.BackSide;
 
         var skyboxMaterial = new THREE.MeshFaceMaterial(mats);
 
@@ -89,8 +89,6 @@
         $("#WebGL-output").append(renderer.domElement);
 
 
-        // CONTROLS
-        controls = new THREE.OrbitControls( camera, renderer.domElement );
 
         // var pointofLight = new THREE.PointLight( 0xffffff );
 
@@ -104,24 +102,21 @@
         var stats = initStats();
         var step = 0;
 
-        // renders();
-        renderer.render(scene, camera);
+        renders();
+        // renderer.render(scene, camera);
 
         
         function renders() {
             stats.update();
             // 绕座标轴旋转立方体
-            // cube.rotation.x += 0.02;
-            // cube.rotation.y += 0.02;
-            // cube.rotation.z += 0.02;
+            cube.rotation.x += 0.02;
+            cube.rotation.y += 0.02;
+            cube.rotation.z += 0.02;
 
             //照相机自动旋转
             step+=0.02;
             var x =6+4*(Math.sin(step));
             camera.lookAt(new THREE.Vector3(x,10,0));
-
-
-
 
             // 用requestAnimationFrame进行渲染
             requestAnimationFrame(renders);

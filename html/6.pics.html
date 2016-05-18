@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>exam.5</title>
+    <title>exam.6</title>
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/stats.js"></script>
     <script type="text/javascript" src="/js/jquery-1.9.0.js"></script>
@@ -28,8 +28,6 @@
         var scene = new THREE.Scene();
         var controls;
         // 创建一个相机
-
-        // THREE.PerspectiveCamera(fov, aspect, near, far)  fov：视角度数，可以理解为眼睛睁开大小，度数越大，你看到的物体越多，物体越小 aspect：是照相机水平方向和竖直方向长度的比值，一般等于width/height near和far：是相机最近和最远的距离，均为正值，far>>near 
 
         var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -71,7 +69,6 @@
         mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/timg_b.jpg' )  }));
 
 
-
         // mats.push(new THREE.MeshBasicMaterial({ color: 0x009e60  }));
         // // r
         // mats.push(new THREE.MeshBasicMaterial({ color: 0x0051ba  }));
@@ -84,7 +81,6 @@
         // // f
         // mats.push(new THREE.MeshBasicMaterial({ color: 0xffffff }));
         // // b
-
 
 
         for (var i = 0; i < 6; i++)
@@ -104,41 +100,26 @@
 
         $("#WebGL-output").append(renderer.domElement);
 
-
         // CONTROLS
-        controls = new THREE.OrbitControls( camera, renderer.domElement );
+        var  OrbitControls = new THREE.OrbitControls( camera, renderer.domElement );    
+        // OrbitControls.enableDamping = true;
+        // OrbitControls.dampingFactor = 0.25;
+        OrbitControls.noZoom = false;
 
-        // var pointofLight = new THREE.PointLight( 0xffffff );
+        // var guiControl=new function(){
+        //     this.
+        // }
 
-        // pointofLight.position.x = 50;
-        // pointofLight.position.y = 50;
-        // pointofLight.position.z = 130;
-        // pointofLight.opacity = 300;
-
-        // scene.addLight(pointofLight);
         
-        // var stats = initStats();
+        var stats = initStats();
         var step = 0;
 
-        // renders();
-        // renderer.render(scene, camera);
+        renders();
 
         
         function renders() {
-            // stats.update();
-            // 绕座标轴旋转立方体
-            // cube.rotation.x += 0.02;
-            // cube.rotation.y += 0.02;
-            // cube.rotation.z += 0.02;
-
-            //照相机自动旋转
-            // step+=0.02;
-            // var x =6+4*(Math.sin(step));
-            // camera.lookAt(new THREE.Vector3(x,10,0));
-
             // 用requestAnimationFrame进行渲染
             requestAnimationFrame(renders);
-            console.info(renderer);
             renderer.render(scene, camera);
             update();
         }
@@ -161,8 +142,10 @@
         }
 
         function update()
-        {            
-            controls.update();
+        {          
+            stats.update();
+            OrbitControls.update();
+
         }
         
         renders();
