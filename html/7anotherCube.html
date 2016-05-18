@@ -13,11 +13,27 @@
             margin: 0;
             overflow: hidden;
         }
+        .control{
+        	height:30px;
+        	padding:0 30px;
+        	display: block;
+        	line-height: 30px;
+        	background-color: #fff;
+        	color:#333;
+        	border-radius: 5px;
+        	position: absolute;
+        	right:10px;
+        	top:10px;
+        	&:hover{
+        		text-decoration:none;
+        	};
+        }
     </style>
 </head>
 <body>
 
 <div id="WebGL-output">
+	<a href="#none" class="control">add</a>
 </div>
 
 <script type="text/javascript">
@@ -53,20 +69,20 @@
         plane.position.z=0
 
         // 把平面加在场景中
-        scene.add(plane);
+        // scene.add(plane);
 
         // 创建一个立方体
-        var cubeGeometry = new THREE.CubeGeometry(407,407,407,0,0,0);
+        var cubeGeometry = new THREE.CubeGeometry(400,400,400,0,0,0);
 
 
         //给六个面添加不同的材质
         var mats = [];
-        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/aaa_r.jpg' )  }));
-        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/aaa_l.jpg' )  }));
-        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/aaa_u.jpg' )  }));
-        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/aaa_d.jpg' )  }));
-        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/aaa_f.jpg' ) }));
-        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/aaa_b.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/bg1.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/bg1.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/bg1.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/bg1.jpg' )  }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/bg1.jpg' ) }));
+        mats.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( 'images/bg1.jpg' )  }));
 
 
         // mats.push(new THREE.MeshBasicMaterial({ color: 0x009e60  }));
@@ -105,11 +121,30 @@
 
 		// scene.add(innercube);
 
+		function addSphere () {
+			var geoms=[];
+			geoms.push(new THREE.SphereGeometry(4,20,20))
+		}
+
+        var sphereGeometry = new THREE.SphereGeometry(4,20,20);
+        var sphereMaterial = new THREE.MeshBasicMaterial({color: 0x0c9da2});
+        var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
+
+        // position the sphere
+        sphere.position.x=20;
+        sphere.position.y=4;
+        sphere.position.z=2;
+
+
+        // add the sphere to the scene
+        scene.add(sphere);
+
+
 
         // 放置相机的位置，并打开相机
-        camera.position.x =100;
-        camera.position.y = 100;
-        camera.position.z = 100;
+        camera.position.x =10;
+        camera.position.y = 10;
+        camera.position.z = 10;
         camera.lookAt(scene.position);
 
         $("#WebGL-output").append(renderer.domElement);
