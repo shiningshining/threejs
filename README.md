@@ -16,3 +16,5 @@ http://www.hewebgl.com/article/getarticle/27
 全景漫游：
 http://learningthreejs.com/data/lets_do_a_sky/lets_do_a_sky.html
 
+球形全景图与立方体切片相互转换
+http://www.krpano360.com/%E7%90%83%E5%BD%A2%E5%85%A8%E6%99%AF%E5%9B%BE%E4%B8%8E%E7%AB%8B%E6%96%B9%E4%BD%93%E5%88%87%E7%89%87%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/
