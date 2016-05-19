@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>exam.6</title>
+    <title>exam.7</title>
     <script type="text/javascript" src="/js/three.js"></script>
     <script type="text/javascript" src="/js/stats.js"></script>
     <script type="text/javascript" src="/js/jquery-1.9.0.js"></script>
@@ -13,7 +13,7 @@
             margin: 0;
             overflow: hidden;
         }
-        .control{
+        #control{
         	height:30px;
         	padding:0 30px;
         	display: block;
@@ -33,7 +33,7 @@
 <body>
 
 <div id="WebGL-output">
-	<a href="#none" class="control">add</a>
+	<a href="#none" id="control">add</a>
 </div>
 
 <script type="text/javascript">
@@ -99,8 +99,11 @@
         // // b
 
 
-        for (var i = 0; i < 6; i++)
-           mats[i].side = THREE.BackSide;
+        for (var i = 0; i < 6; i++){
+            mats[i].side = THREE.BackSide;
+            mats[i].wrapS = mats[i].wrapT = THREE.RepeatWrapping;
+        }
+
 
         var skyboxMaterial = new THREE.MeshFaceMaterial(mats);
 
@@ -123,7 +126,8 @@
 
 		function addSphere () {
 			var geoms=[];
-			geoms.push(new THREE.SphereGeometry(4,20,20))
+			geoms.push(new THREE.SphereGeometry(4,20,20));
+			
 		}
 
         var sphereGeometry = new THREE.SphereGeometry(4,20,20);
@@ -199,6 +203,23 @@
         
         renders();
 
+        var nums=0;
+        $("body").delegate("#control","click",function (scene){
+
+            var icolor=["#fca5ab","#039c9a","#785e5d","#fea523","#d52d00","#04641a"];
+            var sphereSize=Math.ceil((Math.random() * 3));
+            var sphereColor=icolor[Math.ceil((Math.random() * 7))];
+            var sphereGeometry=new THREE.SphereGeometry(4,20,20);
+            var sphereMaterial = new THREE.MeshLambertMaterial({color: sphereColor});
+            var sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            nums++;
+            sphere2.name="sphere-"+nums;
+            sphere2.position.x=-30+Math.round((Math.random()*100));
+            sphere2.position.y= Math.round((Math.random()*5));
+            sphere2.position.z=-20 + Math.round((Math.random()*100));
+            scene.add(sphere2);
+
+        })
     });
 
 </script>
