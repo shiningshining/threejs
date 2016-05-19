@@ -48,7 +48,9 @@
         var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
 
         // 创建一个渲染器，设置尺寸大小 。
-        var renderer = new THREE.WebGLRenderer();
+        var renderer = new THREE.WebGLRenderer({
+            maxLights:4
+        });
 
         renderer.setClearColor(0xEEEEEE);
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -70,6 +72,31 @@
 
         // 把平面加在场景中
         // scene.add(plane);
+
+
+
+
+        var pointofLight = new THREE.PointLight( 0xffffff );
+
+        pointofLight.position.x = 300;
+        pointofLight.position.y = 300;
+        pointofLight.position.z = 330;
+        pointofLight.opacity = 300;
+
+
+        var pointofLight2 = new THREE.PointLight( 0xffff00 );
+
+        pointofLight2.position.x = -350;
+        pointofLight2.position.y = 350;
+        pointofLight2.position.z = -300;
+        pointofLight2.opacity = 300;
+
+
+        scene.add(pointofLight);
+        scene.add(pointofLight2);
+
+
+
 
         // 创建一个立方体
         var cubeGeometry = new THREE.CubeGeometry(400,400,400,0,0,0);
@@ -131,7 +158,7 @@
 		}
 
         var sphereGeometry = new THREE.SphereGeometry(4,20,20);
-        var sphereMaterial = new THREE.MeshBasicMaterial({color: 0x0c9da2});
+        var sphereMaterial = new THREE.MeshLambertMaterial({color: 0x0c9da2});
         var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
 
         // position the sphere
@@ -146,9 +173,9 @@
 
 
         // 放置相机的位置，并打开相机
-        camera.position.x =10;
-        camera.position.y = 10;
-        camera.position.z = 10;
+        camera.position.x =150;
+        camera.position.y = 150;
+        camera.position.z = 160;
         camera.lookAt(scene.position);
 
         $("#WebGL-output").append(renderer.domElement);
@@ -164,7 +191,6 @@
         // }
 
         
-        var stats = initStats();
         var step = 0;
 
         renders();
@@ -177,26 +203,10 @@
             update();
         }
 
-        function initStats() {
-            //fps显示统计
-            var stats = new Stats();
-
-            stats.setMode(0); // 0: fps, 1: ms
-
-            // 左上角对齐
-            stats.domElement.style.position = 'absolute';
-            stats.domElement.style.left = '0px';
-            stats.domElement.style.top = '0px';
-            stats.domElement.style.zIndex =100;
-
-            $("#WebGL-output").append( stats.domElement );
-
-            return stats;
-        }
 
         function update()
         {          
-            stats.update();
+            
             OrbitControls.update();
 
         }
@@ -204,20 +214,30 @@
         renders();
 
         var nums=0;
-        $("body").delegate("#control","click",function (scene){
+        $("#control").bind("click",function (){
+            console.log("nums+"+nums);
+            if (nums<=15) {
 
-            var icolor=["#fca5ab","#039c9a","#785e5d","#fea523","#d52d00","#04641a"];
-            var sphereSize=Math.ceil((Math.random() * 3));
-            var sphereColor=icolor[Math.ceil((Math.random() * 7))];
-            var sphereGeometry=new THREE.SphereGeometry(4,20,20);
-            var sphereMaterial = new THREE.MeshLambertMaterial({color: sphereColor});
-            var sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial);
-            nums++;
-            sphere2.name="sphere-"+nums;
-            sphere2.position.x=-30+Math.round((Math.random()*100));
-            sphere2.position.y= Math.round((Math.random()*5));
-            sphere2.position.z=-20 + Math.round((Math.random()*100));
-            scene.add(sphere2);
+                var icolor=["0xfca5ab","0x039c9a","0x785e5d","0xfea523","0xd52d00","0x04641a"];
+                var inter=[-1,1];
+                var sphereSize=Math.ceil(Math.random() * 40);
+                var sColor=Math.ceil(Math.random() * 6);
+                console.log(sColor);
+                // debugger;
+                // console.log("icolor[sColor]＝"+icolor[5]);
+                var sphereColor=icolor[sColor-1];
+                console.log(sphereColor);
+                var sphereGeometry=new THREE.SphereGeometry(sphereSize,20,20);
+                var sphereMaterial = new THREE.MeshLambertMaterial({color: parseInt(sphereColor)});
+                var sphere2 = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                nums++;
+                sphere2.name="sphere-"+nums;
+                sphere2.position.x=Math.round(Math.random()*200)*inter[Math.ceil(Math.random() * 2-1)];
+                sphere2.position.y= Math.round(Math.random()*200)*inter[Math.ceil(Math.random() * 2-1)];
+                sphere2.position.z=Math.round(Math.random()*200)*inter[Math.ceil(Math.random() * 2-1)];
+                // debugger;
+                scene.add(sphere2);
+            }
 
         })
     });
